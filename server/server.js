@@ -16,11 +16,100 @@ app.use((_, res, next) => {
 app.get("/", (_, res) => {
   res.json({
     items: [
-      { id: 1, title: "Title #1", property: "property #1" },
-      { id: 2, title: "Title #2", property: "property #2" },
-      { id: 3, title: "Title #3", property: "property #3" },
-      { id: 4, title: "Title #4", property: "property #4" },
-      { id: 5, title: "Title #5", property: "property #5" },
+      {
+        id: 1,
+        maschine: [
+          {
+            id: 1.1,
+            name: "Name #1-1",
+            type: "type",
+            state: "AUTO",
+            nio: 15,
+            io: 20,
+            avgCt: 10,
+            dCt: 4,
+          },
+        ],
+        name: "Name #1",
+      },
+      {
+        id: 2,
+        maschine: [
+          {
+            id: 2.1,
+            name: "Name #2-1",
+            type: "type",
+            state: "AUTO",
+            nio: 15,
+            io: 20,
+            avgCt: 10,
+            dCt: 4,
+          },
+          {
+            id: 2.2,
+            name: "Name #2-2",
+            type: "type",
+            state: "FAILURE",
+            nio: 15,
+            io: 20,
+            avgCt: 10,
+            dCt: 4,
+          },
+          {
+            id: 2.3,
+            name: "Name #2-3",
+            type: "type",
+            state: "AUTO",
+            nio: 15,
+            io: 20,
+            avgCt: 10,
+            dCt: 4,
+          },
+          {
+            id: 2.4,
+            name: "Name #2-4",
+            type: "type",
+            state: "AUTO",
+            nio: 15,
+            io: 20,
+            avgCt: 10,
+            dCt: 4,
+          },
+        ],
+        name: "Name #2",
+      },
+      {
+        id: 3,
+        maschine: [
+          {
+            id: 3.1,
+            name: "Name #1-1",
+            type: "type",
+            state: "AUTO",
+            nio: 15,
+            io: 20,
+            avgCt: 10,
+            dCt: 4,
+          },
+        ],
+        name: "Name #1",
+      },
+      {
+        id: 4,
+        maschine: [
+          {
+            id: 4.1,
+            name: "Name #1-1",
+            type: "type",
+            state: "AUTO",
+            nio: 15,
+            io: 20,
+            avgCt: 10,
+            dCt: 4,
+          },
+        ],
+        name: "Name #1",
+      },
     ],
   })
 })
@@ -30,8 +119,17 @@ const interval = () => {
     "items",
     Array.from({ length: 5 }).map((_, i) => ({
       id: i + 1,
-      title: `Title #${i + 1}`,
-      property: `property ${Math.floor(Math.random() * 101)}`,
+      name: `Name #${i + 1}`,
+      maschine: Array.from({ length: 5 }).map((_, i) => ({
+        id: i + 1,
+        name: `Name #${i + 1}`,
+        type: "type",
+        state: "AUTO",
+        nio: Math.floor(Math.random() * 101),
+        io: Math.floor(Math.random() * 101),
+        avgCt: Math.floor(Math.random() * 101),
+        dCt: Math.floor(Math.random() * 101),
+      })),
     })),
   )
 }
