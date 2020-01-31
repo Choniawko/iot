@@ -2,6 +2,8 @@ const app = require("express")()
 const http = require("http").createServer(app)
 const io = require("socket.io")(http)
 
+const data = require("./data")
+
 const PORT = 5000
 
 app.use((_, res, next) => {
@@ -112,6 +114,11 @@ app.get("/", (_, res) => {
       },
     ],
   })
+})
+
+app.get("/data/:day", (req, res) => {
+  const item = data.find(({ key }) => req.params.day === key) || {}
+  res.json(item.values)
 })
 
 const interval = () => {

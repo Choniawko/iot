@@ -1,10 +1,10 @@
 import React from "react"
-import { extent, line } from "d3"
+import { line, nest, min, max } from "d3"
 import { Axis } from "../Axis"
 import { getScaleLinear, getScaleTime } from "../../../common/utils"
 
 const height = 260
-const width = 260
+const width = 500
 const { top, right, bottom, left } = {
   top: 10,
   right: 20,
@@ -12,36 +12,15 @@ const { top, right, bottom, left } = {
   left: 50,
 }
 
-const data = [
-  {
-    date: new Date("2020-12-02T10:00:00Z"),
-    value: Math.floor(Math.random() * 101),
-  },
-  {
-    date: new Date("2020-12-02T11:00:00Z"),
-    value: Math.floor(Math.random() * 101),
-  },
-  {
-    date: new Date("2020-12-02T12:00:00Z"),
-    value: Math.floor(Math.random() * 101),
-  },
-  {
-    date: new Date("2020-12-02T13:00:00Z"),
-    value: Math.floor(Math.random() * 101),
-  },
-  {
-    date: new Date("2020-12-02T14:00:00Z"),
-    value: Math.floor(Math.random() * 101),
-  },
-  {
-    date: new Date("2020-12-02T15:00:00Z"),
-    value: Math.floor(Math.random() * 101),
-  },
-]
-
-export const LineChart = () => {
+export const LineChart = ({ values }) => {
+  const groupedByname = nest()
+    .key(({ name }) => name)
+    .entries(values)
   const x = getScaleTime({
-    domain: extent(data, ({ date }) => date),
+    domain: [
+      min(values.map(({ date }) => new Date(date))),
+      max(values.map(({ date }) => new Date(date))),
+    ],
     range: [0, width],
   })
   const y = getScaleLinear({
@@ -58,10 +37,15 @@ export const LineChart = () => {
       />
       <Axis scale={y} translate={[left, top]} type="left" />
       <g transform={`translate(${left}, ${top})`}>
-        <path
-          d={line()(data.map(({ date, value }) => [x(date), y(value)]))}
-          style={{ fill: "none", stroke: "black", strokeWidth: 1.5 }}
-        />
+        {groupedByname.map(({ key, values }) => (
+          <path
+            key={key}
+            d={line()(
+              values.map(({ date, value }) => [x(new Date(date)), y(value)]),
+            )}
+            style={{ fill: "none", stroke: "black", strokeWidth: 1.5 }}
+          />
+        ))}
       </g>
     </svg>
   )
