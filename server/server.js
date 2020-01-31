@@ -120,15 +120,17 @@ io.on("connection", socket => {
       "items",
       Array.from({ length: 5 }).map((_, i) => ({
         id: i + 1,
-        title: `Title #${i + 1}`,
-        property: `property ${Math.floor(Math.random() * 101)}`
-      }))
-    );
-    console.log(
-      Array.from({ length: 5 }).map((_, i) => ({
-        id: i + 1,
-        title: `Title #${i + 1}`,
-        property: `property ${Math.floor(Math.random() * 101)}`
+        name: `Name #${i + 1}`,
+        maschine: Array.from({ length: 5 }).map((_, i) => ({
+          id: i + 1,
+          name: `Name #${i + 1}`,
+          type: "type",
+          state: "AUTO",
+          nio: Math.floor(Math.random() * 101),
+          io: Math.floor(Math.random() * 101),
+          avgCt: Math.floor(Math.random() * 101),
+          dCt: Math.floor(Math.random() * 101)
+        }))
       }))
     );
   }, 5000);
