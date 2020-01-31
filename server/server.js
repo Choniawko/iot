@@ -34,13 +34,6 @@ const interval = () => {
       property: `property ${Math.floor(Math.random() * 101)}`,
     })),
   )
-  console.log(
-    Array.from({ length: 5 }).map((_, i) => ({
-      id: i + 1,
-      title: `Title #${i + 1}`,
-      property: `property ${Math.floor(Math.random() * 101)}`,
-    })),
-  )
 }
 
 io.on("connection", socket => {
