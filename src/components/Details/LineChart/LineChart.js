@@ -1,7 +1,11 @@
 import React from "react"
 import { line, nest, min, max } from "d3"
 import { Axis } from "../Axis"
-import { getScaleLinear, getScaleTime } from "../../../common/utils"
+import {
+  getScaleLinear,
+  getScaleOrdinal,
+  getScaleTime,
+} from "../../../common/utils"
 
 const height = 260
 const width = 500
@@ -16,6 +20,7 @@ export const LineChart = ({ values }) => {
   const groupedByname = nest()
     .key(({ name }) => name)
     .entries(values)
+  const allKeys = groupedByname.map(({ key }) => key)
   const x = getScaleTime({
     domain: [
       min(values.map(({ date }) => new Date(date))),
@@ -26,6 +31,20 @@ export const LineChart = ({ values }) => {
   const y = getScaleLinear({
     domain: [0, 100],
     range: [height, top],
+  })
+  const color = getScaleOrdinal({
+    domain: allKeys,
+    range: [
+      "#e41a1c",
+      "#377eb8",
+      "#4daf4a",
+      "#984ea3",
+      "#ff7f00",
+      "#ffff33",
+      "#a65628",
+      "#f781bf",
+      "#999999",
+    ],
   })
   return (
     <svg width={width + left + right} height={height + top + bottom}>
@@ -43,7 +62,7 @@ export const LineChart = ({ values }) => {
             d={line()(
               values.map(({ date, value }) => [x(new Date(date)), y(value)]),
             )}
-            style={{ fill: "none", stroke: "black", strokeWidth: 1.5 }}
+            style={{ fill: "none", stroke: color(key), strokeWidth: 1.5 }}
           />
         ))}
       </g>

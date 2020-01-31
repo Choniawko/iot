@@ -1,4 +1,4 @@
-import { scaleLinear, scaleTime } from "d3"
+import { scaleLinear, scaleTime, scaleOrdinal } from "d3"
 
 export const getScaleLinear = ({ domain, range }) =>
   scaleLinear()
@@ -7,5 +7,10 @@ export const getScaleLinear = ({ domain, range }) =>
 
 export const getScaleTime = ({ domain, range }) =>
   scaleTime()
+    .domain(domain)
+    .range(range)
+
+export const getScaleOrdinal = ({ domain, range }) =>
+  scaleOrdinal()
     .domain(domain)
     .range(range)
